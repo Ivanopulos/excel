@@ -116,11 +116,15 @@ def consist(df, sdf):  # дополняем таблицу
                 while u < maxx+1:  # !!!                !!!!         start of grouping # collecting names for grouping
                     if a[u] == 1:
                         gr.append(df.columns[u])  # collecting names for grouping
-                        ns = ns + df.columns[u] + ' + '  # usual namestolb
+                        # ns = ns + df.columns[u] + ' + '  # usual namestolb
+                        if ns:  # usual namestolb
+                            ns = " + ".join(ns, df.columns[u])
+                        else:
+                            ns = df.columns[u]
                         sch+=1
                     u += 1
                 sn = pandas.DataFrame(df.groupby(gr).size().reset_index(name=('Итог' + str(i))))  # сама группировка
-                sn[ns] = sn[sn.columns[:sch]].apply(lambda x: ','.join(x.dropna().astype(str)), axis=1)  # складываем все кроме суммы
+                sn[ns] = sn[sn.columns[:sch]].apply(lambda x: '_'.join(x.dropna().astype(str)), axis=1)  # складываем все кроме суммы
                 sn = sn[[ns, ('Итог' + str(i))]]  # set and cut to stay 2 columns
                 # sn = sn.loc[sn['штук'] != 1]                                         #clear from value
                 stromax = len(df)
@@ -209,5 +213,5 @@ print('trnspositions finished')
 #sdf=delcopy(sdf)
 #sum1(sdf,df)
 #sdf.to_excel(r'File_Name.xlsx')
-sdf.to_csv(r'File Name.csv')
+sdf.to_csv(r'File Name.csv', sep='\t', encoding='cp1251')
 print('save finished')
