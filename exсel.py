@@ -118,7 +118,7 @@ def consist(df, sdf):  # дополняем таблицу
                         gr.append(df.columns[u])  # collecting names for grouping
                         # ns = ns + df.columns[u] + ' + '  # usual namestolb
                         if ns:  # usual namestolb
-                            ns = " + ".join(ns, df.columns[u])
+                            ns = " + ".join([ns, df.columns[u]])
                         else:
                             ns = df.columns[u]
                         sch+=1
