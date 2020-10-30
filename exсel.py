@@ -6,7 +6,7 @@ def put():
     o = win32ui.CreateFileDialog(1, '', '', 0, 'Любой файл |*.*')
     o.DoModal()
     return o.GetPathName()
-def transposition(sdf):
+def transposition(sdf):  # перетаскиваем столбцы по возрастанию
     i=0
     tt=0
     z=[]
@@ -53,12 +53,6 @@ def transposition(sdf):
         #print(sdf2)
         i=i+1
     return sdf2
-# def sum1(sdf,df):
-#     i=0
-#     stromax=len(df)
-#     stolmaxsdf=sdf.shape[1]
-#     while i < stolmaxsdf:
-#
 def delcopy(sdf):
     i=1
     while i<len(sdf.columns):
@@ -201,17 +195,16 @@ stolmax = df.shape[1]-1                      # количество столбц
 variant = 2 ** (stolmax+1) - 1  # число всех перестановок и включений начиная с первой
 KOL_OTREZKOV=5                               # задаем размерность арифметической кластеризации
 print('process begin')
-# for u in range(1, stolmax):
-#     COLUMN_NAME=df.columns[u]                   # какую колонку смотрим
-#     NumberStrok = 1                         # начиная с какой строки начинаем смотреть для числовой разбивки на кластеры
-#     df2=pandas.DataFrame(otrezki(df, KOL_OTREZKOV, NumberStrok, COLUMN_NAME))  # функция кластеризации
+for u in range(1, stolmax):
+    COLUMN_NAME=df.columns[u]                   # какую колонку смотрим
+    NumberStrok = 1                         # начиная с какой строки начинаем смотреть для числовой разбивки на кластеры
+    df2=pandas.DataFrame(otrezki(df, KOL_OTREZKOV, NumberStrok, COLUMN_NAME))  # функция кластеризации
 sdf=pandas.DataFrame()
 sdf=consist(df, sdf)
 print('group finished')
 sdf=transposition(sdf)
 print('trnspositions finished')
 #sdf=delcopy(sdf)
-#sum1(sdf,df)
-#sdf.to_excel(r'File_Name.xlsx')
-sdf.to_csv(r'File Name.csv', sep='\t', encoding='cp1251')
+sdf.to_excel(r'File_Name.xlsx')
+#sdf.to_csv(r'File Name.csv', sep='\t', encoding='cp1251')
 print('save finished')
